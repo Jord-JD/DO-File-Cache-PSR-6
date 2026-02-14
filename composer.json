@@ -24,7 +24,7 @@
     }
   },
   "replace": {
-    "jord-jd/do-file-cache-psr-6": "self.version"
+    "divineomega/do-file-cache-psr-6": "self.version"
   },
   "extra": {
     "branch-alias": {
