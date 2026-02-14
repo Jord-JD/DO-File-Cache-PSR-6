@@ -10,13 +10,11 @@
   ],
   "license": "LGPL-3.0-only",
   "require": {
-    "divineomega/do-file-cache": "^2.0.0",
+    "jord-jd/do-file-cache": "^2.0.0",
     "psr/cache": "^1.0"
   },
   "require-dev": {
-    "cache/integration-tests": "^0.16.0",
-    "phpunit/phpunit": "^5.7",
-    "php-coveralls/php-coveralls": "^2.1"
+    "phpunit/phpunit": "^9.6"
   },
   "autoload": {
     "psr-4": {
