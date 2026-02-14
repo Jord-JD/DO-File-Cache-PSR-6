@@ -1,26 +1,34 @@
 {
-    "name": "divineomega/do-file-cache-psr-6",
-    "description": "PSR-6 adapter for DO File Cache",
-    "type": "library",
-    "authors": [
-        {
-            "name": "Jordan Hall",
-            "email": "jordan@hall05.co.uk"
-        }
-    ],
-    "license": "LGPL-3.0-only",
-    "require": {
-        "divineomega/do-file-cache": "^2.0.0",
-        "psr/cache": "^1.0"
-    },
-    "require-dev": {
-        "cache/integration-tests": "^0.16.0",
-        "phpunit/phpunit": "^5.7",
-        "php-coveralls/php-coveralls": "^2.1"
-    },
-    "autoload": {
-        "psr-4": {
-            "DivineOmega\\DOFileCachePSR6\\": "src/"
-        }
+  "name": "jord-jd/do-file-cache-psr-6",
+  "description": "PSR-6 adapter for DO File Cache",
+  "type": "library",
+  "authors": [
+    {
+      "name": "Jordan Hall",
+      "email": "jordan@hall05.co.uk"
     }
+  ],
+  "license": "LGPL-3.0-only",
+  "require": {
+    "divineomega/do-file-cache": "^2.0.0",
+    "psr/cache": "^1.0"
+  },
+  "require-dev": {
+    "cache/integration-tests": "^0.16.0",
+    "phpunit/phpunit": "^5.7",
+    "php-coveralls/php-coveralls": "^2.1"
+  },
+  "autoload": {
+    "psr-4": {
+      "DivineOmega\\DOFileCachePSR6\\": "src/"
+    }
+  },
+  "replace": {
+    "jord-jd/do-file-cache-psr-6": "self.version"
+  },
+  "extra": {
+    "branch-alias": {
+      "dev-master": "3.0-dev"
+    }
+  }
 }
