@@ -10,7 +10,7 @@
   ],
   "license": "LGPL-3.0-only",
   "require": {
-    "jord-jd/do-file-cache": "^2.0.0",
+    "jord-jd/do-file-cache": "^5.0",
     "psr/cache": "^1.0"
   },
   "require-dev": {
@@ -18,7 +18,7 @@
   },
   "autoload": {
     "psr-4": {
-      "DivineOmega\\DOFileCachePSR6\\": "src/"
+      "JordJD\\DOFileCachePSR6\\": "src/"
     }
   },
   "replace": {

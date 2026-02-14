@@ -1,9 +1,9 @@
 <?php
 
-namespace DivineOmega\DOFileCachePSR6;
+namespace JordJD\DOFileCachePSR6;
 
 use Psr\Cache\CacheItemPoolInterface;
-use DivineOmega\DOFileCache\DOFileCache;
+use JordJD\DOFileCache\DOFileCache;
 use Psr\Cache\CacheItemInterface;
 
 class CacheItemPool implements CacheItemPoolInterface

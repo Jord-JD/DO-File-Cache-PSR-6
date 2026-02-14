@@ -1,6 +1,6 @@
 <?php
 
-namespace DivineOmega\DOFileCachePSR6;
+namespace JordJD\DOFileCachePSR6;
 
 use Psr\Cache\CacheItemInterface;
 

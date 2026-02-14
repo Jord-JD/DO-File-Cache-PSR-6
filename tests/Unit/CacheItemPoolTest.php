@@ -2,8 +2,8 @@
 
 declare(strict_types=1);
 
-use DivineOmega\DOFileCachePSR6\CacheInvalidArgumentException;
-use DivineOmega\DOFileCachePSR6\CacheItemPool;
+use JordJD\DOFileCachePSR6\CacheInvalidArgumentException;
+use JordJD\DOFileCachePSR6\CacheItemPool;
 use PHPUnit\Framework\TestCase;
 
 final class CacheItemPoolTest extends TestCase

@@ -3,7 +3,7 @@
 use PHPUnit\Framework\TestCase;
 
 use Cache\IntegrationTests\CachePoolTest;
-use DivineOmega\DOFileCachePSR6\CacheItemPool;
+use JordJD\DOFileCachePSR6\CacheItemPool;
 
 class PoolIntegrationTest extends CachePoolTest
 {
