@@ -1,7 +1,7 @@
 # PSR-6 adapter for DO File Cache
 
-[![Build Status](https://travis-ci.org/DivineOmega/DO-File-Cache-PSR-6.svg?branch=master)](https://travis-ci.org/DivineOmega/DO-File-Cache-PSR-6)
-[![Coverage Status](https://coveralls.io/repos/github/DivineOmega/DO-File-Cache-PSR-6/badge.svg?branch=master)](https://coveralls.io/github/DivineOmega/DO-File-Cache-PSR-6?branch=master)
+[![Build Status](https://travis-ci.org/Jord-JD/DO-File-Cache-PSR-6.svg?branch=master)](https://travis-ci.org/Jord-JD/DO-File-Cache-PSR-6)
+[![Coverage Status](https://coveralls.io/repos/github/Jord-JD/DO-File-Cache-PSR-6/badge.svg?branch=master)](https://coveralls.io/github/Jord-JD/DO-File-Cache-PSR-6?branch=master)
 
 This package provides a [PSR-6](http://www.php-fig.org/psr/psr-6/) adapter for [DO File Cache](https://github.com/Jord-JD/DO-File-Cache). 
 
