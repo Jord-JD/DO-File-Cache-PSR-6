@@ -18,12 +18,12 @@ class CacheItem implements CacheItemInterface
         $this->value = $value;
     }
 
-    public function getKey()
+    public function getKey(): string
     {
         return $this->key;
     }
 
-    public function get()
+    public function get(): mixed
     {
         if ($this->isHit()===false) {
             return null;
@@ -37,7 +37,7 @@ class CacheItem implements CacheItemInterface
         return $this->expires;
     }
 
-    public function isHit()
+    public function isHit(): bool
     {
         if ($this->expires !== 0 && $this->expires < time()) {
             return false;
@@ -46,7 +46,7 @@ class CacheItem implements CacheItemInterface
         return $this->value !== false;
     }
 
-    public function set($value)
+    public function set($value): static
     {
         if ($this->isDeferred) {
             $this->deferredValue = $value;
@@ -66,7 +66,7 @@ class CacheItem implements CacheItemInterface
         return $this;
     }
 
-    public function expiresAt($expiration)
+    public function expiresAt($expiration): static
     {
         if ($expiration==null) {
             $this->expires = 0;
@@ -76,7 +76,7 @@ class CacheItem implements CacheItemInterface
         return $this;
     }
 
-    public function expiresAfter($time)
+    public function expiresAfter($time): static
     {
         if (is_integer($time)) {
             $this->expires = time()+$time;

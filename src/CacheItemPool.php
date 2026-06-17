@@ -37,7 +37,7 @@ class CacheItemPool implements CacheItemPoolInterface
 
     }
 
-    public function getItem($key)
+    public function getItem($key): CacheItemInterface
     {
         $this->sanityCheckKey($key);
 
@@ -48,7 +48,7 @@ class CacheItemPool implements CacheItemPoolInterface
         return new CacheItem($key, $this->doFileCache->get($key));
     }
 
-    public function getItems(array $keys = [])
+    public function getItems(array $keys = []): iterable
     {
         $results = [];
 
@@ -59,20 +59,20 @@ class CacheItemPool implements CacheItemPoolInterface
         return $results;
     }
 
-    public function hasItem($key)
+    public function hasItem($key): bool
     {
         $this->sanityCheckKey($key);
 
         return $this->getItem($key)->isHit();
     }
 
-    public function clear()
+    public function clear(): bool
     {
         $this->deferredItems = [];
         return $this->doFileCache->flush();
     }
 
-    public function deleteItem($key)
+    public function deleteItem($key): bool
     {
         $this->sanityCheckKey($key);
 
@@ -86,7 +86,7 @@ class CacheItemPool implements CacheItemPoolInterface
         return true;
     }
 
-    public function deleteItems(array $keys)
+    public function deleteItems(array $keys): bool
     {
 
 
@@ -97,18 +97,18 @@ class CacheItemPool implements CacheItemPoolInterface
         return true;
     }
 
-    public function save(CacheItemInterface $item)
+    public function save(CacheItemInterface $item): bool
     {
         return $this->doFileCache->set($item->getKey(), $item->get(), $item->getExpires());
     }
 
-    public function saveDeferred(CacheItemInterface $item)
+    public function saveDeferred(CacheItemInterface $item): bool
     {
         $this->deferredItems[$item->getKey()] = $item->prepareForSaveDeferred();
         return true;
     }
 
-    public function commit()
+    public function commit(): bool
     {
         foreach($this->deferredItems as $item) {
             $this->save($item);
