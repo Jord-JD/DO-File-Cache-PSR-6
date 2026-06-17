@@ -25,7 +25,7 @@ class CacheItem implements CacheItemInterface
 
     public function get(): mixed
     {
-        if ($this->isHit()===false) {
+        if ($this->isHit() === false) {
             return null;
         }
 
@@ -50,10 +50,12 @@ class CacheItem implements CacheItemInterface
     {
         if ($this->isDeferred) {
             $this->deferredValue = $value;
-            return;
+
+            return $this;
         }
 
         $this->value = $value;
+
         return $this;
     }
 
@@ -63,25 +65,27 @@ class CacheItem implements CacheItemInterface
         if ($this->deferredValue) {
             $this->value = $this->deferredValue;
         }
+
         return $this;
     }
 
     public function expiresAt($expiration): static
     {
-        if ($expiration==null) {
+        if ($expiration == null) {
             $this->expires = 0;
         } else {
             $this->expires = $expiration->getTimestamp();
         }
+
         return $this;
     }
 
     public function expiresAfter($time): static
     {
         if (is_integer($time)) {
-            $this->expires = time()+$time;
+            $this->expires = time() + $time;
         }
+
         return $this;
     }
-
 }

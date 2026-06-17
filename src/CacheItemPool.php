@@ -2,9 +2,9 @@
 
 namespace JordJD\DOFileCachePSR6;
 
-use Psr\Cache\CacheItemPoolInterface;
 use JordJD\DOFileCache\DOFileCache;
 use Psr\Cache\CacheItemInterface;
+use Psr\Cache\CacheItemPoolInterface;
 
 class CacheItemPool implements CacheItemPoolInterface
 {
@@ -21,20 +21,19 @@ class CacheItemPool implements CacheItemPoolInterface
         return $this->doFileCache->changeConfig($config);
     }
 
-    private function sanityCheckKey($key) 
+    private function sanityCheckKey($key)
     {
         if (!is_string($key)) {
-            throw new CacheInvalidArgumentException;
+            throw new CacheInvalidArgumentException();
         }
 
         $invalidChars = ['{', '}', '(', ')', '/', '\\', '@', ':'];
 
-        foreach($invalidChars as $invalidChar) {
-            if (stripos($key, $invalidChar)!==false) {
-                throw new CacheInvalidArgumentException;
+        foreach ($invalidChars as $invalidChar) {
+            if (stripos($key, $invalidChar) !== false) {
+                throw new CacheInvalidArgumentException();
             }
         }
-
     }
 
     public function getItem($key): CacheItemInterface
@@ -52,7 +51,7 @@ class CacheItemPool implements CacheItemPoolInterface
     {
         $results = [];
 
-        foreach($keys as $key) {
+        foreach ($keys as $key) {
             $results[$key] = $this->getItem($key);
         }
 
@@ -69,6 +68,7 @@ class CacheItemPool implements CacheItemPoolInterface
     public function clear(): bool
     {
         $this->deferredItems = [];
+
         return $this->doFileCache->flush();
     }
 
@@ -78,6 +78,7 @@ class CacheItemPool implements CacheItemPoolInterface
 
         if (array_key_exists($key, $this->deferredItems)) {
             unset($this->deferredItems[$key]);
+
             return true;
         }
 
@@ -88,9 +89,7 @@ class CacheItemPool implements CacheItemPoolInterface
 
     public function deleteItems(array $keys): bool
     {
-
-
-        foreach($keys as $key) {
+        foreach ($keys as $key) {
             $this->deleteItem($key);
         }
 
@@ -105,15 +104,17 @@ class CacheItemPool implements CacheItemPoolInterface
     public function saveDeferred(CacheItemInterface $item): bool
     {
         $this->deferredItems[$item->getKey()] = $item->prepareForSaveDeferred();
+
         return true;
     }
 
     public function commit(): bool
     {
-        foreach($this->deferredItems as $item) {
+        foreach ($this->deferredItems as $item) {
             $this->save($item);
         }
         $this->deferredItems = [];
+
         return true;
     }
 
