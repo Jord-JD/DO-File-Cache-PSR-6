@@ -1,0 +1,24 @@
+name: Tests
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        php: ['8.0', '8.5']
+        psr-cache: ['^1.0', '^2.0', '^3.0']
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+          coverage: none
+      - run: composer require --no-update "psr/cache:${{ matrix.psr-cache }}"
+      - run: composer update --prefer-dist --no-interaction
+      - run: vendor/bin/phpunit
