@@ -67,6 +67,27 @@ final class CacheItemPoolTest extends TestCase
         $this->assertSame('deferred-value', $fetched->get());
     }
 
+    /**
+     * @dataProvider falseyValues
+     */
+    public function testDeferredCommitPersistsFalseyValues($value): void
+    {
+        $item = $this->pool->getItem('falsey');
+        $item->set($value);
+        $this->pool->saveDeferred($item);
+
+        $this->assertTrue($this->pool->commit());
+
+        $fetched = $this->pool->getItem('falsey');
+        $this->assertTrue($fetched->isHit());
+        $this->assertSame($value, $fetched->get());
+    }
+
+    public function falseyValues(): array
+    {
+        return [[false], [null], [0], ['']];
+    }
+
     public function testInvalidKeyThrowsException(): void
     {
         $this->expectException(CacheInvalidArgumentException::class);

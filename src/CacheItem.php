@@ -2,6 +2,9 @@
 
 namespace JordJD\DOFileCachePSR6;
 
+use DateInterval;
+use DateTimeImmutable;
+use DateTimeInterface;
 use Psr\Cache\CacheItemInterface;
 
 class CacheItem implements CacheItemInterface
@@ -9,23 +12,23 @@ class CacheItem implements CacheItemInterface
     private $key;
     private $value;
     private $expires = 0;
-    public $isDeferred = false;
-    public $deferredValue;
+    private $hit;
 
-    public function __construct($key, $value)
+    public function __construct($key, $value, ?bool $hit = null)
     {
         $this->key = $key;
         $this->value = $value;
+        $this->hit = $hit ?? $value !== false;
     }
 
-    public function getKey()
+    public function getKey(): string
     {
         return $this->key;
     }
 
-    public function get()
+    public function get(): mixed
     {
-        if ($this->isHit()===false) {
+        if (!$this->isHit()) {
             return null;
         }
 
@@ -37,51 +40,53 @@ class CacheItem implements CacheItemInterface
         return $this->expires;
     }
 
-    public function isHit()
+    public function isHit(): bool
     {
-        if ($this->expires !== 0 && $this->expires < time()) {
+        if ($this->expires !== 0 && $this->expires <= time()) {
             return false;
         }
 
-        return $this->value !== false;
+        return $this->hit;
     }
 
-    public function set($value)
+    public function set($value): static
     {
-        if ($this->isDeferred) {
-            $this->deferredValue = $value;
-            return;
-        }
-
         $this->value = $value;
+        $this->hit = true;
+
         return $this;
     }
 
-    public function prepareForSaveDeferred()
+    public function prepareForSaveDeferred(): static
     {
-        $this->isDeferred = true;
-        if ($this->deferredValue) {
-            $this->value = $this->deferredValue;
-        }
         return $this;
     }
 
-    public function expiresAt($expiration)
+    public function expiresAt($expiration): static
     {
-        if ($expiration==null) {
+        if ($expiration === null) {
             $this->expires = 0;
-        } else {
+        } elseif ($expiration instanceof DateTimeInterface) {
             $this->expires = $expiration->getTimestamp();
+        } else {
+            throw new CacheInvalidArgumentException('Expiration must be a DateTimeInterface instance or null.');
         }
+
         return $this;
     }
 
-    public function expiresAfter($time)
+    public function expiresAfter($time): static
     {
-        if (is_integer($time)) {
-            $this->expires = time()+$time;
+        if ($time === null) {
+            $this->expires = 0;
+        } elseif (is_int($time)) {
+            $this->expires = time() + $time;
+        } elseif ($time instanceof DateInterval) {
+            $this->expires = (new DateTimeImmutable())->add($time)->getTimestamp();
+        } else {
+            throw new CacheInvalidArgumentException('Expiration must be an integer, DateInterval instance, or null.');
         }
+
         return $this;
     }
-
 }
